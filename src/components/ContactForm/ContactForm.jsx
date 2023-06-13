@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from "react-redux";
+import {addContact} from './../../redux/contactsSlice.js'
 import { nanoid } from 'nanoid';
 import css from './ContactForm.module.css';
 
-const ContactForm = ({ addNewContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -31,7 +35,7 @@ const ContactForm = ({ addNewContact }) => {
       number: number.trim(),
     };
 
-    addNewContact(newContact);
+    dispatch(addContact(newContact));
 
     setName('');
     setNumber('');
@@ -40,8 +44,8 @@ const ContactForm = ({ addNewContact }) => {
   return (
     <div className={css.formWrapper}>
       <form className={css.form} onSubmit={handleSubmit}>
-        <p>Name</p>
-        <input
+        <p className={css.txt}>Name</p>
+        <input className={css.input}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -50,8 +54,8 @@ const ContactForm = ({ addNewContact }) => {
           value={name}
           onChange={handleChange}
         />
-        <p>Number</p>
-        <input
+        <p className={css.txt}>Number</p>
+        <input className={css.input}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
